@@ -1,0 +1,50 @@
+All the previously described implementations are combined and controllable via a main script.
+
+The overall workflow of this script includes 8 major steps. 
+
+
+First of is the creation of Word2Vec word embeddings with the different hyperparameters and archictectures which are described in chapter \ref{word2vec_imp}. These are parameters of the main script (see $we\_min\_count$, $we\_window\_size$, $we\_vector\_size$, $we\_alpha$, $we\_implementation$ in table \ref{tab:parameters}) and are configurable in the console.
+
+Secondly the created Word2Vec embedding(s) that are specified by the parameters of the main script is evaluated by computing the accuracy the LSTM Neural Network has achieved on the POS-tagging task with the word embedding as its sole input. This neural network contains the number of units in the LSTM layer specified by a parameter of the main script (see $unit\_count$ in table \ref{tab:parameters}) which is configurable. Each evaluated Word2Vec model is documented with its accuracy in a CSV file.
+
+The third step searches for the five best performing Word2Vec models evaluated as described in step two, even if they were evaluated in another session, supposing there are already as much as 5 evaluated in the respective CSV file. The selected Word2Vec models provide the hyperparameters for the FastText word embeddings as described in chapter \ref{fasttext_imp} and the range for the character ngrams is supplied by parameters of the main script (see $ft\_char\_range\_min$, $ft\_char\_range\_max$ in table \ref{tab:parameters}) and is thereby again directly configurable in the console.
+
+Next comes the evaluation of the created FastText word embeddings which happens similarly to step two for the Word2Vec models and is executed for all FastText word embeddings that are specified by the creation process of step 3 with the same number of units as was specified for step 2 ($unit\_count$). These evaluations have a respective CSV file to document the performance of the FastText models.
+
+As the fifth step of the main script workflow, the GloVe word embedding(s) is evaluated by selecting the pre-trained word embedding with the vector size according to a parameter of the main script (see $glove\_dimensions$ in table \ref{tab:parameters}) and, as for the other frameworks, a LSTM Neural Network with the before specified number of units in its hidden layer ($unit\_count$) is evaluated by computing the accuracy on the POS-tagging task and documented in a CSV file.
+
+The sixth step searches for all word embedding frameworks the best performing model, which was at some point evaluated by step 2, 4 and 5, in the respective CSV file. This will not necessarily be the word embeddings specified by the parameters of the main script that were chosen for this particular execution of the script. These 3 models will provide the word embeddings and the number of units in the hidden layer of the POS-tagging model for the final evaluations in step 7.
+
+Afterwards, in the seventh step the three best performing models of each word embedding framework with their respective $unit\_count$ are evaluated thoroughly in combination with the feature groups that are either included or excluded through the parameters of the script (see $eval\_char\_related$, $eval\_case\_related$, $eval\_sent\_position$, $eval\_affixes$ in table \ref{tab:parameters}) and are described in chapter \ref{feat_imp}. Additionally it can be regulated whether the word embeddings are placed at the beginning or the end of the encoded features for a word by the parameter $eval\_we\_end$.
+For the resulting POS-tagging models dictionaries are created and saved as JSON files which include several evaluation metrics. For each tag in the tagset the precision, recall and F1-score is computed individually. Overarching the individual tags the macro precision, macro recall, macro F1-score, weighted precision, weighted recall, weighted F1-score and the general accuracy are computed and added to the dictionary.
+
+Finally, in step 8, for all thoroughly evaluated models the macro precision, macro recall, macro F1-score, weighted precision, weighted recall, weighted F1-score and accuracy are printed to the console. This is done for all models that have been evaluated at any point in time in step 7 and therefore have a respective dictionary with their evaluation.
+
+\newcommand*{\thead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+\begin{table}[]
+\centering
+\label{tab_parameter}
+\begin{tabular}{|l|l|l|}
+\thead{Parameter name} & \thead{Description} & \thead{Covered} \\
+\hline
+we\_min\_count       & Minimal word count for W2V/FT creation       & {[}1, 2, 3, 5{]}         \\
+we\_window\_size     & Window size for W2V/FT creation              & {[}2, 3, 5{]}            \\
+we\_vector\_size     & Vector sizes  for W2V/FT creation            & {[}50, 100, 200{]}       \\
+we\_alpha            & Alpha (learning rate) for W2V/FT creation    & {[}0.015, 0.03, 0.045{]} \\
+we\_implementation   & Architecture for W2V/FT creation             & {[}'cbow', 'sg'{]}       \\ \hline
+ft\_char\_range\_min & Minimum character range for FT creation      & {[}(2, 5), (3, 6){]}     \\
+ft\_char\_range\_max & Maximum character range for FT creation      & {[}(2, 5), (3, 6){]}     \\ \hline
+glove\_dimensions    & Vector size for GloVe embedding selection       & {[}50, 100, 200{]}       \\ \hline
+unit\_count          & Unit count for the LSTM layer in POS-tagger        & {[}75, 125{]}            \\ \hline
+eval\_char\_related  & Binary: Include character related features    & {[}0, 1{]}               \\
+eval\_case\_related  & Binary: Include case related features         & {[}0, 1{]}               \\
+eval\_sent\_position & Binary: Include sentence position r. features & {[}0, 1{]}               \\
+eval\_affixes        & Binary: Include affix related features       & {[}0, 1{]}               \\
+eval\_we\_end        & Binary: Place word embedding at the end            & {[}0, 1{]}               \\ \hline
+\end{tabular}
+\caption{Parameters to regulate the behaviour of the main script. The columns include the parameter name, a description of its function and values used in the complete evaluation.}
+\label{tab:parameters}
+\end{table}
+
+To reproduce all the created word embeddings, their respectively evaluated POS-tagging models and the thorough evaluations of the best word embeddings models per framework with all the different combinations of feature groups, it is recommended to change the code of the main script by commenting out the specific parameters given to the main script by the console arguments and instead use the list of choices for those parameters (see column 3 in table \ref{tab_parameter}) that are present in the script but are commented out. 

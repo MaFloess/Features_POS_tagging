@@ -1,0 +1,319 @@
+\documentclass[12pt]{article}
+
+\usepackage[]{graphicx}
+\usepackage[]{color}
+\usepackage{alltt}
+\usepackage{float}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\newcommand{\mytitle}{A Comparative Evaluation of the Utility of Linguistic Features for Part-of-Speech-Tagging}
+\newcommand{\myname}{Marco Flöß}
+\newcommand{\mysupervisor}{Prof. Dr. Christian Heumann, Dr. Matthias Assenmacher}
+
+\usepackage[a4paper, width = 160mm, top = 35mm, bottom = 30mm, 
+bindingoffset = 0mm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{ragged2e}
+\usepackage{xcolor}
+\usepackage[round, comma]{natbib}
+\usepackage{fancyhdr}
+\newcommand{\changefont}{%
+    \fontsize{8}{11}\selectfont
+}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true,
+  linkcolor = black,
+  urlcolor = black,
+  citecolor = black}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[R]{\changefont{\mytitle}}
+\fancyfoot{}
+\fancyfoot[R]{\thepage}
+\setlength{\headheight}{14.5pt}
+\setlength{\parindent}{0pt}
+\interfootnotelinepenalty = 10000
+
+% ------------------------------------------------------------------------------
+% MAIN -------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+% FRONT PAGE -------------------------------------------------------------------
+ 
+\begin{titlepage}
+\begin{center}
+    
+\LARGE
+Bachelor's Thesis
+    
+\vspace{0.5cm}
+      
+\rule{\textwidth}{1.5pt}
+\LARGE
+\textbf{\mytitle}
+\rule{\textwidth}{1.5pt}
+   
+\vspace{0.5cm}
+      
+\large
+Department of Statistics \\
+Ludwig-Maximilians-Universität München 
+
+\vfill
+
+\Large
+\textbf{\myname}
+
+\vfill
+
+\large
+Munich, July 25\textsuperscript{th}, 2022
+      
+\vfill
+
+\includegraphics[width = 0.4\textwidth]{Pictures/sigillum.png}
+
+\vfill
+
+\normalsize
+Submitted in partial fulfillment of the requirements for the degree of B. Sc.
+\\
+
+Supervised by \mysupervisor
+
+\end{center}
+\end{titlepage}
+
+% CONTENTS ---------------------------------------------------------------------
+
+\pagenumbering{Roman}
+\newpage
+
+\begin{abstract}
+
+The task of Part-of-Speech-tagging is an important step in many natural language processing tasks. It constitutes the automatic assignment of tags to words that signify their syntactic function and morphological behaviour, thereby providing valuable information which can help to disambiguate the semantic nature of the corresponding word.
+
+This thesis explores different sources of features that can be obtained from raw text data and may prove useful to build an effective Part-of-Speech-tagging model. Therefore the word identity as a feature was encoded using dense word embeddings. The Word2Vec and FastText framework were utilized to train the respective word embeddings directly on the training data while for the GloVe framework Stanford's pre-trained word embeddings were deployed. Additionally to the word identity several groups of linguistic features were implemented regarding the kind of characters a word may encompass, the case of characters in a word, the position of a word relative to its sentence and possible affixes present in a word. 
+
+As an architecture for the Part-of-Speech-tagger a Long-Short-Term-Memory Neural Network was chosen as it is able to capture structural regularities in sequential data and sentences are essentially sequences of words. 
+
+The Georgetown University Multilayer Corpus constitutes the data on which all evaluations are performed and as a compilation of texts that stem from a variety of communicative purposes was deemed a reasonable basis for the analysis to generalize well to a wide scope of data. 
+
+The utility of the before mentioned features was compared by consulting metrics such as the accuracy and weighted F1-score on the Part-of-Speech-tagging task. For models, regardless of the implemented word embedding framework, the features regarding the case of characters in a word have been shown to considerably enhance its performance across the evaluation metrics. If the GloVe framework is utilized to encode the word identity, the additional information provided by features dealing with possible affixes of words is shown to significantly improve the models performance. 
+
+In general, this thesis first gives a theoretical introduction into the topics of Part-of-Speech-tagging, neural networks and word embeddings. 
+Secondly, the practical part explores which instantiations of word embedding frameworks are favorable and afterwards compares the utility of including the different groups of linguistic features in the input for the Part-of-Speech-tagging models.
+
+\end{abstract}
+
+\newpage
+\tableofcontents
+
+%%%% if you would want to include material overview
+%%%% use one of the following in addition
+% \newpage
+% \listoffigures
+% \newpage
+% \listoftables
+\newpage
+
+% CHAPTERS ---------------------------------------------------------------------
+
+\pagenumbering{arabic}
+    
+
+\section{Introduction}
+\label{intro}
+\input{chapters/1_introduction}
+\newpage
+
+
+% Begin Theory Part 
+
+\section{Part-of-Speech-Tagging}
+
+\subsection{Definition}
+\label{pos_def}
+\input{chapters/2_pos/1_definition}
+
+\subsection{Significance of accurate syntactic and lexical classification}
+\label{pos_sig}
+\input{chapters/2_pos/2_significance}
+
+\subsection{Tagsets}
+\label{pos_tagsets}
+\input{chapters/2_pos/3_tagsets}
+
+\subsection{Related linguistic features}
+\label{pos_features}
+\input{chapters/2_pos/4_features}
+
+
+\section{Neural Networks}
+
+\subsection{The modeling of the logical XOR}
+\label{nn_xor}
+\input{chapters/3_nn/1_xor}
+
+\subsection{Feed-Forward Neural Networks}
+\label{nn_ff}
+\input{chapters/3_nn/2_ffnn}
+
+\subsection{Recurrent Neural Networks}
+\label{nn_rnn}
+\input{chapters/3_nn/3_rnn}
+
+\subsection{Long-Short-Term-Memory Neural Networks}
+\label{nn_lstm}
+\input{chapters/3_nn/4_lstm}
+
+
+\section{Word Embeddings}
+\label{we}
+
+\subsection{Aspiration}
+\label{word_asp}
+\input{chapters/4_we/1_aspiration}
+
+\subsection{Word2Vec}
+\label{word_w2v}
+\input{chapters/4_we/2_word2vec}
+
+\subsection{FastText}
+\label{word_fasttext}
+\input{chapters/4_we/3_fasttext}
+
+\subsection{GloVe}
+\label{word_glove}
+\input{chapters/4_we/4_glove}
+
+
+% Begin Practical Part 
+
+\section{The Georgetown University Multilayer Corpus} % and possible other datasets
+\input{chapters/5_gum}
+\label{gum}
+
+
+\section{Implementation}
+
+\subsection{CoNLL-U format and data extraction}
+\label{conllu_imp}
+\input{chapters/6_implementation/1_conllu}
+
+\subsection{Simple feature extraction and encoding}
+\label{feat_imp}
+\input{chapters/6_implementation/2_feature_extraction}
+
+\subsection{LSTM Neural Network}
+\label{lstm_imp}
+\input{chapters/6_implementation/3_lstm}
+
+\subsection{Encoding word identity with word embeddings}
+\subsubsection{Word2vec}
+\label{word2vec_imp}
+\input{chapters/6_implementation/4_1_word2vec}
+
+\subsubsection{FastText}
+\label{fasttext_imp}
+\input{chapters/6_implementation/4_2_fasttext}
+
+\subsubsection{GloVe}
+\label{glove_imp}
+\input{chapters/6_implementation/4_3_glove}
+
+\subsection{Workflow of the evaluation process}
+\label{workflow_imp}
+\input{chapters/6_implementation/5_workflow}
+
+
+\section{Results}
+
+\subsection{Word embeddings}
+\label{res_we}
+\input{chapters/7_results/1_we}
+
+\subsection{Utility of linguistic features}
+\label{res_feature}
+\input{chapters/7_results/2_features}
+
+
+\section{Discussion and Conclusion}
+\input{chapters/8_discussion}
+
+\newpage
+
+
+
+\pagenumbering{Roman}
+
+\setcounter{page}{3} % CHANGE
+
+\appendix
+
+\section{Electronic appendix}
+\label{el_app}
+
+To access all material relevant to this thesis, please refer to the respective GitLab repository which is available under: \href{https://gitlab.lrz.de/statistics/summer22/ba_floess.git}{A Comparative Evaluation of the Utility of Linguistic Features for Part-of-Speech-Tagging}
+
+It contains the following:
+\begin{itemize}
+  \item The GUM data split in train, development and test set as provided by the Universal Dependencies website.
+  \item Stanford's pre-trained GloVe word embeddings with the dimensionalities of 50, 100 and 200.
+  \item The code that is necessary to reproduce the analysis of this thesis with additional instructional clues on how to utilize it.
+  \item All evaluation files mentioned in thesis.
+  \item A folder with the LaTeX project.
+\end{itemize}
+
+
+\newpage
+
+
+% ------------------------------------------------------------------------------
+% BIBLIOGRAPHY -----------------------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\RaggedRight
+\bibliography{bibliography}
+\bibliographystyle{dcu}
+\newpage
+
+% ------------------------------------------------------------------------------
+% DECLARATION OF AUTHORSHIP-----------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\Large
+\noindent
+\textbf{Declaration of authorship} 
+\vspace{0.5cm}
+\noindent
+\normalsize
+
+I hereby declare that the report submitted is my own unaided work. All direct 
+or indirect sources used are acknowledged as references. I am aware that the 
+Thesis in digital form can be examined for the use of unauthorized aid and in 
+order to determine whether the report as a whole or parts incorporated in it may 
+be deemed as plagiarism. For the comparison of my work with existing sources I 
+agree that it shall be entered in a database where it shall also remain after 
+examination, to enable comparison with future Theses submitted. Further rights 
+of reproduction and usage, however, are not granted here. This paper was not 
+previously presented to another examination board and has not been published.
+\\
+
+\vspace{1cm}
+\textcolor{orange}{Location, date} \\
+
+\vspace{3cm}
+
+\noindent\rule{0.5\textwidth}{0.4pt} \\
+
+\textcolor{orange}{Name}
+
+% ------------------------------------------------------------------------------
+
+\end{document}

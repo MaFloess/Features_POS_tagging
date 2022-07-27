@@ -1,0 +1,16 @@
+Once the data is retrieved in Python in form of a list of sentences which themselves are lists of tuples (the word and their respective tag), the features for the POS-tagger have to be extracted.
+
+As neural networks provide the framework for our model, all features have to be encoded in a numeric fashion.
+
+The features used in this thesis are grouped into classes to limit the combinations for which to run the evaluations of the models since the computational cost of training thousands of neural networks to cover all possible combinations of single features was not feasible.
+
+First of is the group of features that concerns itself with the class of characters a word encompasses. Therefore five features have been encoded in a binary fashion (either 0 or 1) to check for different characteristics of the associated characters of a word. It is checked whether a word is made up of purely alphabetic characters, purely numeric characters, purely alphanumeric characters, whether it contains at least one numeric character and whether it contains a hyphen. In positive cases these features are encoded with the value 1 and else with 0. From now on this class of features will be referred to as the character related features.
+
+Secondly, a feature group of four deals with the case of characters in a word. They check whether a word starts with a capital letter, it has a capital letter after the first character, is completely upper case or completely lower case. This group will be referred to as the case related features.
+
+Thirdly a group of two features checks whether a word appears at the beginning or end of a sentence and will therefore be called the sentence position related features.
+
+The final group of features concerns itself with affixes of words, prefixes and suffixes. To get information on the prefixes that may be encompassed in a word, a list of the most common English prefixes according to the Cambridge Dictionary \citep{cambridge2022prefix} was used to search for words with these prefixes in the training data. 
+For prefixes found in the training data the most common tag for words with the respective prefix has been set as the default tag which will be encoded for all words with such a prefix.
+Similarly, suffixes are searched for by using a stemmer provided by the NLTK package. Again, for suffixes that have been found in the training data the most common tag for each respective suffix will be encoded for words that encompass it.
+For both, prefixes and suffixes, it is checked how many different tags, that were most common to words with a certain affix, were encountered. Afterwards a one-hot-encoding is created with length respective to the different tags, found as mentioned before, in which the position of the tag, which was the most common tag for a certain affix, is encoded with a 1 if this affix is found in a word. Thereby the two features for prefixes and suffixes result in one-hot-encodings with varying length indicating which tag was most common to a known affix in the training data. This group will be referred to as the affix related feature group.

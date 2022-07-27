@@ -1,0 +1,10 @@
+Part-of-Speech-tagging implements an annotation of data which proceeds at the level of words. Hereby each element of a corpus receives a morphosyntaktic label called the Part-of-Speech-tag \citep{westpfahl2020pos}. 
+This label incorporates information on the morphological behaviour and syntactic function of its unit, thereby leading to the alternative naming conventions such as word classes, morphological classes or lexical tags \citep{jurafsky2021}.
+
+In this thesis the label will always be referred to as the POS-tag. 
+
+Since clear distinctions between these categories are an animated source of discussions, the pool of possible tags, from which a model draws, varies vehemently according to which tagset a model was trained on. These tagsets comprise categories which in unison are all-encompassing and try to provide a complete subdivision of the different morphosyntactic roles words can embody \citep{westpfahl2020pos}. 
+Tagsets naturally are only applicable for one language since morphosyntactic roles vary in their delimitation between themselves and apart from that, some categories may not even have an equivalent counterpart in a language which was not the origin of the tagset.
+
+While the decision making process for a certain POS-tag uses several features on the word itself, the process of tagging performs poorly if merely the to-be-tagged word is provided \citep{jurafsky2021}. 
+The underlying algorithm of the model receives the data to be annotated sentence-wise and has access to intrinsic and extrinsic cues \citep{goldberg2017neural}. 

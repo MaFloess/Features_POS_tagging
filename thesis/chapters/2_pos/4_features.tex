@@ -1,0 +1,19 @@
+\cite{goldberg2017neural} divides the sources of information for POS-tagging into two major groups. 
+One is formed by the utilization of attributes of the word itself which from now on will be called intrinsic cues. 
+These stand against the complementary group of extrinsic cues that compromise all features the context of the to be tagged word, the sentence, is able to provide.
+
+As mentioned before POS-tags hold information on the morphosyntactic nature of a word. 
+Therefore the the inverse direction, morphological and syntactic attributes provide information on the respective POS-tag, may hold valuable data, too.
+
+Intrinsic cues unsurprisingly are based mostly on the morphological characteristic of a token. 
+Depending on the level of inflection present in a language, the morphology of a word can be indicative of its syntactic function \citep{earl1966part}. 
+In comparison to other languages, English is not a highly inflected language though in many cases a relationship between form and POS-tag is present.
+For example the suffix '-ed' is, with a high probability, an indication for a past-tense verb, just as the prefix 'un-' will be incorporated at the beginning of an adjective most of the time.
+Another important intrinsic cue for POS-tagging is the identity of the word itself which in an unambiguous language would be sufficient to build an infallible tagger, but even in ambiguous settings the identity is linked to a certain probability distribution for its tag \citep{goldberg2017neural}. 
+Finally sub-word information such as the incorporation of capital or non-alphanumeric characters and digits may be used as features for POS-tagging.
+
+On the other hand extrinsic cues are based on all information which can be gathered without considering the target word for the current decision.
+While we may not have direct information on the syntactic function of a word in an untagged sentence, the position in the sentence in relationship to the other words is to be considered an indication of its syntactic role. 
+Therefore it is paramount to consider the surrounding words and their features to make an prediction for the target word. 
+Additionally to the intrinsic cues we obtained for each preceding word, the predicted POS-tag for these tokens in the sentence may be beneficial, provided that we make the tagging decision sequentially \citep{goldberg2017neural}.
+

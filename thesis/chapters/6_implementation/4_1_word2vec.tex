@@ -1,0 +1,20 @@
+To encode the word identity, all word embedding frameworks presented in chapter \ref{we} were utilized and in the case of Word2Vec and FastText self-trained on the training data with the Gensim package.
+
+For the Word2Vec framework 216 different word embeddings have been trained using all possible combinations of values for the hyperparameters which will be discussed in the following paragraphs and the two architectures of Word2Vec.
+
+As the $gensim.models.Word2Vec$ function comes with numerous hyperparameters for regulating the training process of the Word2Vec word embeddings, all hyperparameters not mentioned here were given their default value. 
+
+First of is the hyperparameter, called $min\_count$, which filters all words that have occurred at least as often as the value it is set to. Words that have occurred fewer times in the used corpus are disregarded for in the training procedure. Values used in the thesis are 1, 2, 3 and 5 which are relatively low values considering the default value to be 5, but given the limited corpus size this choice was deemed reasonable.
+
+Next of is the window size ($window$) which regulates the prediction task as explained in chapter \ref{word_w2v}. In this thesis the values 2, 3 and 5 were employed, though these are again rather on the low side of values given the default value to be 5. This choice was made on the basis that the syntactic relatedness of words declines sharply with the distance between them which is of main concern to the task of POS-tagging.
+
+The third hyperparameter for which different instantiations were utilized is the vector size ($vector\_size$) of the resulting word embeddings. As the default for this parameter is 100, the values used in this thesis are 50, 100 and 200 to test for the quality of word embeddings with dimensionalities of the default value, a lower value and a considerably higher value.
+
+Afterwards the hyperparameter called $alpha$ which is the learning rate of the training algorithm was tuned with the values of 0.015, 0.03 and 0.045. These values were chosen as to reasonably cover the different learning rates relative to the default value of 0.025.
+
+All the before mentioned values of hyperparameters were used in combination with the two architectures, CBOW and SG, to create the 216 different word embeddings with the Word2Vec framework.
+
+The hyperparameter of the minimal learning rate ($min\_alpha$), which constitutes the bottom line for the linearly decreasing learning rate ($alpha$) as training progresses, was set to the quotient of $alpha$ and the default value of the training epochs (5). This results for all applied learning rates in a much higher value than its default value 0.0001. This was done since the amount of data used for training the word embeddings (the GUM training data) is much smaller than the size of data \citet{mikolov2013efficient} used in their paper.
+
+For all created Word2Vec word embeddings two LSTM Neural Networks, see chapter \ref{lstm_imp}, for the POS-tagging task are created. The first has 75 units in the hidden LSTM layer and the second one has 125. The accuracy of these models should be the basis on which to decide the quality of the different Word2Vec word embeddings when these are the only features provided for the POS-tagging model.
+

@@ -1,0 +1,14 @@
+First of, it needs to be said that all programming related notions are done using the programming language Python.
+
+The data of the Georgetown University Multilayer Corpus is openly avaible on the Universal Dependencies website where it is provided in the CoNLL-U format. This format encodes the data in plain text form using the LF character as line breaks and incorporates lines containing information on words, comment lines and blank lines marking the boundary of a sentence \citep{ud2022opencom}.
+
+Sentences are made up by at least a single word line which possesses 10 fields with information on the syntactic nature and dependencies of its words.
+
+As this thesis explores the predictive power of linguistic features for POS-tagging in settings where just the plain text is being provided, the fields that are extracted are simply the 'form' which is present in the sentence and the respective 'UPOS' which is one of the 17 tags in the Universal Dependencies tagset, presented in chapter \ref{pos_tagsets}. The latter will be considered the gold standard for the task in general.
+
+While some of the remaining 8 fields of the words may hold valuable information for the prediction of tags, these were not extracted since they are not accessible once a corpus without annotations is presented to the POS-tagging model.
+
+\citet{Zeldes2017} provided the data already split in a train, development and test set while ensuring that the discussed text types in chapter \ref{gum} are balanced equally in them.
+
+So after importing the data from the CoNLL-U format to Python, a list of sentences which themselves are lists of tuples with word form and the respective tag is provided for each of the sets. 
+The training set contains roughly one hundred thousand tagged words while the development and test set compromise about 16 thousand respectively.

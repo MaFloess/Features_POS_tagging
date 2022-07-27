@@ -1,0 +1,19 @@
+One shortcoming of the Word2Vec framework is that it only assigns distinct embeddings to words. In cases of corpora with many rare words, this may result in missing embeddings for words that have not been in the training corpus \citep{bojanowski2017enriching}.
+
+To bypass this limitation by providing word embeddings for a high percentage of before unseen words, the concept of implementing the prediction tasks of chapter \ref{word_w2v} additionally at the level of constituent character n-grams for each word is realized. This technique was developed as an extension of the Word2Vec framework, called FastText \citep{bojanowski2017enriching}. 
+
+Especially since many before unseen words are morphological variations of words that exist in the vocabulary \citep{embedding2020pilehvar}, the enabling of learning these different morphological forms of words without necessarily encountering each form in its completeness in the corpus provides valuable data \citep{jain2016fasttext}. 
+
+So the representations of words are learned by summing up the embeddings learnt for the constituent n-grams and the word itself \citep{rehurek2022fasttext}. 
+
+If one considers the word 'fastext' and character n-grams of length 3, the resulting sequence on which sub-word character ngram embeddings are learnt is made up of:
+
+\begin{quote}
+    \label{char-n-grams}
+    \centering
+    $<$fa,  fas,    ast,    stt,    tte,    tex,    ext,    xt$>$
+\end{quote}
+
+'$<$' and '$>$' are considered special boundary symbols to delimit the word boundaies \citep{jurafsky2021}.
+
+Once a before unseen word is encountered, the FastText framework creates its word embedding by averaging its constituent sub-word embeddings. Thereby providing a reasonable alternative to assigning 0-vectors or random numbers as word embeddings for these words with the drawback that words may incorporate the same constituent sub-word n-grams without being semantically related \citep{embedding2020pilehvar}.

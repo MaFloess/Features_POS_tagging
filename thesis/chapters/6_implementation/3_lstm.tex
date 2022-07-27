@@ -1,0 +1,11 @@
+The task of POS-tagging utilizes intrinsic and extrinsic features of words in a sentence as its input values as described in chapter \ref{pos_features}. Sentences can be considered as sequential data, a sequence of words.
+
+To ensure the preservation of the structural properties of sequential data Recurrent Neural Networks are appropriate, while the task of retaining information of previous predictions and avoiding vanishing gradients in the training process of neural network makes LSTM Neural Networks the choice for the model architecture for the POS-tagging task.
+
+In Python LSTM Neural Networks can be implemented using the Keras package. Therefore a sequential model ($keras.models.Sequential$) was defined. As the sole hidden layer in this model a LSTM layer ($keras.layers.LSTM$) was appended with a varying number of units ($unit\_count$) which are specified by other modules in this thesis. Afterwards the output layer is added which contains as many units as the tagset contains different tags. So in case of using the Universal Dependencies tagset, it has 17 units on which the $softmax$ function is applied. The compilation of this model was done with the optimizer called $adam$ and the Cross-Entropy loss function was implemented.
+
+The number of input units for this model was not specified to ensure the model's setup to be adaptable to the varying number of features that are used in the different evaluation processes.
+
+To enable feeding the whole set of training data for fitting the model, the sentences need to have a fixed length. Therefore the length of the longest sentence in the data is used as the length for all the other sentences which are padded with zero vectors to fill the difference in their length.
+
+All models mentioned in this thesis use this LSTM Neural Network's setup for the task of POS-tagging and are therefore often referred to simply as the POS-tagging models. If the sole input of such a model is the implementation of a certain word embedding framework, the LSTM Neural Network given the POS-tagging task is often referenced by the name of the word embedding framework plus 'model'.

@@ -1,0 +1,20 @@
+The Word2Vec and FastText framework provide word embeddings that utilize local context window methods, the prediction tasks discussed in chapter \ref{word_w2v}, to enable them to perform considerably well on analogy tasks regarding their semantic relatedness. Though statistical information like the global co-occurrence counts are mostly disregarded by these frameworks and thereby they miss potential leverage for the quality of the word embeddings as they do not take advantage of the vast amount of repetition in the data \citep{pennington2014glove}.
+
+In contrast, the GloVe framework directly utilizes the global corpus statistics which gave rise to its name \citep{jurafsky2021}.
+
+Another key difference to the two before mentioned frameworks is that GloVe uses no neural network in its model, but introduces an optimization problem to construct the word embeddings \citep{embedding2020pilehvar}.
+While a neural network could have been deployed in the construction of this framework, \citet{pennington2014glove} have made a point against this, since it would obfuscate the linear structure of the word embeddings they were trying to capture.
+
+The key idea behind the GloVe framework is to use co-occurrence probabilities of words and their ratios \citep{jurafsky2021} to build an objective function which is optimized by stochastic gradient descent \citep{embedding2020pilehvar}.
+This objective function is built on the hypothesis that semantic relationships can be effictively captured by computing the ratio of co-occurrence probabilities for three words $w_i,w_j,w_k$. Consider $P_{i,k}$ as the probability of the word $w_k$ occurring in the context of word $w_i$.
+
+\begin{equation}
+    \label{eq:ratio}
+    P_{i,k}/P_{j,k}
+\end{equation}
+
+Then the ratio (\ref{eq:ratio}) is expected to be large if $w_i$ and $w_k$ have a semantic relatedness, co-occur often, while $w_j$ and $w_k$ have no semantic relatedness, seldom co-occur. It is expected to be small in the vice-versa case. If neither or both, $w_i$ and $w_j$, have a semantic relatedness to $w_k$, the before mentioned ratio is expected to be near 1. All these hypotheses have been exemplified in \citet{pennington2014glove}.
+
+As the before mentioned ratio is based on three different words $w_i,w_j,w_k$ and can be the source of information on their semantic relatedness, the objective function that is optimized in the GloVe framework has been modified as to capture the information inherent in such ratios in the word embeddings of the respective words \citep{pennington2014glove}.
+
+\citet{pennington2014glove} have shown in their result chapter that the GloVe framework may outperform Word2Vec on word analogy tasks and provide the word embeddings in a shorter time span under similar conditions.

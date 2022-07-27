@@ -1,0 +1,70 @@
+As explained in chapter \ref{workflow_imp}, a first evaluation on the basis of the accuracy on the POS-tagging task was done to decide which word embeddings in combination with a certain number of units in the hidden layer of the LSTM Neural Network model ($unit\_count$) perform the best for each of the three covered frameworks.
+
+Each framework was individually evaluated to decide the most favorable hyperparameters, architecture (in case of Word2Vec and FastText) and the best performing amount of units in the hidden layer (in case of all frameworks). The only hyperparameter to differentiate for between the pre-trained GloVe word embeddings is their vector size.
+
+\begin{table}[]
+\centering
+\begin{tabular}{lllllll}
+\thead{min\_count} & \thead{window} & \thead{vector\_size} & \thead{alpha} & \thead{architecture} & \thead{unit\_count} & \thead{accuracy}  \\
+\hline
+2 & 3 & 200 & 0.045 & SG & 125 & 0.696 \\
+5 & 5 & 200 & 0.045 & SG & 125 & 0.692 \\
+2 & 2 & 200 & 0.045 & SG & 125 & 0.690 \\
+3 & 2 & 200 & 0.045 & SG & 125 & 0.688 \\
+3 & 5 & 200 & 0.045 & SG & 75 & 0.687
+\end{tabular}
+\caption{Hyperparameters, architecture and number of units in the hidden layer of the model of the five best performing Word2Vec models sorted by accuracy}
+\label{tab:w2v}
+\end{table}
+
+In table \ref{tab:w2v} the five best performing Word2Vec models are listed by their hyperparameters, architecture and the number of units used in the LSTM layer of the POS-tagging model. 
+One can surmise from this table that a high vector size, a high learning rate, the SG architecture and the higher amount of units in the hidden layer make a POS-tagging model perform better on the GUM dataset. It could be speculated that higher vector sizes and numbers for the $unit\_count$ parameter enable the model to represent more complex attributes that are valuable to the POS-tagging task. The fact that the highest of the three covered learning rates performed best could indicate that with the limited amount of data available the pace of learning needs to be relatively high to enabling the training process to encode valuable structural properties.
+
+Given the information in table \ref{tab:w2v}, the final evaluation of the utility of linguistic features used a Word2Vec word embedding with the hyperparameters and architecture of the uppermost model in the table and the respective $unit\_count$ in the POS-tagging model. This will be the foundation of the final analysis given that one uses the Word2Vec framework for word embeddings.
+
+The five models present in table \ref{tab:w2v} specify the hyperparameters $min\_count$, $window$, $vector\_size$, $alpha$, the architecture and number of units ($unit\_count$) for the creation of FastText word embeddings and the respective LSTM Neural Networks that are build with them as their sole input.
+
+\begin{table}[]
+\centering
+\begin{tabular}{llll}
+\thead{Word2Vec model basis} & \thead{min\_n} & \thead{max\_n} & \thead{accuracy}  \\
+\hline
+w2v\_2\_3\_200\_045\_sg\_125 & 2 & 5 & 0.698 \\
+w2v\_2\_2\_200\_045\_sg\_125 & 2 & 5 & 0.692 \\
+w2v\_3\_2\_200\_045\_sg\_125 & 2 & 5 & 0.692 \\
+w2v\_3\_5\_200\_045\_sg\_75 & 2 & 5 & 0.669 \\
+w2v\_2\_2\_200\_045\_sg\_125 & 3 & 6 & 0.664
+\end{tabular}
+\caption{The first column displays the Word2Vec model basis which supplies the $min\_count$, $window$, $vector\_size$, $alpha$, architecture parameters for the FastText word embeddings and the number of units in the hidden layer ($unit\_count$) for the resulting model. The second and third column are the hyperparameters characteristic to FastText word embeddings and the last column is the accuracy of the resulting model.}
+\label{tab:ft}
+\end{table}
+
+In table \ref{tab:ft} the five best performing FastText models are presented which incorporate subword information by providing embeddings for character ngrams in the ranges of (2,5) and (3,6). These models yield no considerably better results regarding the accuracy in the POS-tagging task on the GUM dataset than the Word2Vec models.
+
+The first column in table \ref{tab:ft} describes the Word2Vec model basis. It follows the notational approach that was used throughout this thesis. 
+Word embeddings and the evaluations for their models are saved and referenced by a naming convention that uses underscores to separate their integral parts.
+First comes an abbreviation for the word embedding framework, afterwards, separated by underscores, parameters that were covered in this thesis and belong to this respective framework and finally, if the name refers to the evaluation of the respective POS-tagging model, the number of units in its hidden layer is written at the end. 
+
+For example w2v\_2\_3\_200\_045\_sg refers to the Word2Vec word embedding with $min\_count$ 2, $window$ 3, $vector\_size$ 200, $alpha$ 0.045 and the SG architecture.
+
+In w2v\_2\_3\_200\_045\_sg\_125 the appended '\_125' at the end indicates that it refers to the evaluation of the LSTM Neural Network with 125 units in the hidden layer and the before mentioned word embeddings as its sole input.
+
+For the final analysis the FastText model specified by the top row in table \ref{tab:ft} will serve as the base model regarding the FastText framework.
+
+\begin{table}[]
+\centering
+\begin{tabular}{lllllll}
+\thead{vector\_size} & \thead{unit\_count} & \thead{accuracy}  \\
+\hline
+200 & 125 & 0.811 \\
+100 & 125 & 0.804 \\
+200 & 75 & 0.797 \\
+100 & 75 & 0.791 \\
+50 & 75 & 0.664 \\
+50 & 125 & 0.655
+\end{tabular}
+\caption{Vector size of the pre-trained GloVe embeddings and the number of units in the hidden layer for the resulting model ($unit\_count$) sorted by the third column, the accuracy on the POS-tagging task.}
+\label{tab:glove}
+\end{table}
+
+As for the GloVe framework, all six combinations of vector sizes ([50, 100, 200]) and numbers of units for the hidden layer of the POS-tagging model ([75, 125]) are evaluated considering their accuracy and depicted in table \ref{tab:glove}. The evaluation of linguistic features will use a GloVe model with vector size 200 for the word embedding and a $unit\_count$ of 125 for the respective POS-tagging model.

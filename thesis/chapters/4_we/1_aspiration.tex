@@ -1,0 +1,17 @@
+As mentioned in chapter \ref{pos_features} the identity of words is a crucial feature for POS-tagging. The model used in this thesis is a neural network and as shown in chapter \ref{nn_ff} these take numeric vectors as input. So the first issue is to find a representation of words which consists of numeric values and have a fixed length to be usable for neural networks.
+
+One simple and important concept of representing words as numeric vectors is the one-hot-encoding. It can be used to find numeric representations for arbitrary objects though we will limit our discussion to character sequences (words).
+
+One-hot representations create vectors with lengths according to the number of distinct words in a certain corpus. Once the set of words, the vocabulary, is known, each word receives an unique index within the vector range which will indicate whether this word is represented within a vector or not. Eventually every object out of the vocabulary of the corpus has been assigned an index and thereby received its unique one-hot representation where the vector possesses zeros at all positions except at the word specific index the number one. 
+
+While this technique is easy to implement, it results in vectors that are computationally inefficient for the majority of neural network architectures, because of their high-dimensionality and and data sparseness \citep{goldberg2017neural}.
+
+While numeric features often hold valuable data by allowing useful metrics for comparisons, e.g. distance measures, the numeric representation of words in one-hot-encoding can perform no reasonable metric such as similarity measures which represent some underlying relation between two words \citep{hirschle2022deep}. Even synonyms have distinct and unrelated representation as one-hot-encoded vectors.
+
+So additionally to its computational inefficiency one-hot-encodings for words fail at capturing any meaningful semantic properties.
+
+A wide-spread and popular solution for these two problems are dense word embeddings which have a dimensionality ranging from 50 to 1000 which comes at the cost that they do not possess a clear interpretation by themselves \citep{jurafsky2021}.
+
+Furthermore these techniques create semantic spaces which are automatically constructed by using the distributional hypothesis. The idea behind this hypothesis can be neatly summarized by supposing that 'a word is characterized by the company it keeps.' This concept was popularized by J.R. Firth in 1957 \citep{embedding2020pilehvar}.
+
+
