@@ -1,0 +1,7 @@
+If the GitLab repository is fully downloaded, just the installation of the following packages is a requirement:
+- conllu
+- nltk
+- numpy
+- gensim
+- keras
+- tabulate
