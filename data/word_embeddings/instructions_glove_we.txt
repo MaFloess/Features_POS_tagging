@@ -1,0 +1,9 @@
+Downloading the pre-trained GloVe word embeddings
+
+Go to 'https://nlp.stanford.edu/projects/glove/' and download:
+Wikipedia 2014 + Gigaword 5 (6B tokens, 400K vocab, uncased, 50d, 100d, 200d, & 300d vectors, 822 MB download): glove.6B.zip 
+
+In this zipped folder 3 necessary files are contained which should be moved directly into the 'data\word_embeddings\' folder:
+glove.6B.50d.txt
+glove.6B.100d.txt
+glove.6B.200d.txt
